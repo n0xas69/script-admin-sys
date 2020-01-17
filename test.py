@@ -2,7 +2,8 @@ import os
 import shutil as sh
 import subprocess as sub
 
-CHEMINS = ["C:\Windows\Temp", r"C:\test", r"%LOCALAPPDATA%\Temp"]
+appdata = os.environ["LOCALAPPDATA"]
+CHEMINS = ["C:\Windows\Temp", appdata + r"\Temp"]
 Ports = [103, 104, 105, 106, 107, 108]
 
 def delete_temp():
@@ -14,18 +15,13 @@ def delete_temp():
                 os.mkdir(chemin)
             except FileExistsError:
                 pass
-            print("Le dossier ",chemin,"a été vidé")
+            print("Le dossier",chemin,"a été vidé")
         else:
-            print("Le dossier ",chemin," n'existe pas")
+            print("Le dossier",chemin," n'existe pas")
 
 def firewall():
     check_firewall = sub.check_output(["whoami"])
 
 # Appel des fonctions
 delete_temp()
-
-
-
-
-
 
