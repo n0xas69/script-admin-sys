@@ -15,9 +15,9 @@ def delete_temp():
                 os.mkdir(chemin)
             except FileExistsError:
                 pass
-            print("Le dossier",chemin,"a été vidé")
+            print(f"Le dossier {chemin} a été vidé")
         else:
-            print("Le dossier",chemin," n'existe pas")
+            print(f"Le dossier {chemin} n'existe pas")
 
 def firewall():
     check_firewall = sub.check_output(["whoami"])
