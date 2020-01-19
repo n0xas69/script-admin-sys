@@ -2,9 +2,12 @@ import os
 import shutil as sh
 import subprocess as sub
 
+
+# -------------Config----------------------
 appdata = os.environ["LOCALAPPDATA"]
 CHEMINS = ["C:\Windows\Temp", appdata + r"\Temp"]
-Ports = [103, 104, 105, 106, 107, 108]
+ports = [103,104,443,15533,10443,22000]
+#------------------------------------------
 
 def delete_temp():
     for chemin in CHEMINS:
@@ -20,10 +23,17 @@ def delete_temp():
             print(f"Le dossier {chemin} n'existe pas")
 
 def firewall():
-    check_firewall = sub.check_output(["whoami"])
+    print("Activation du Par-Feu")
+    os.system("NetSh Advfirewall set allprofiles state on")
+    print("Ouverture des ports néccéssaires au bon fonctionnement de l'application.")
+    for port in ports:
+        os.system(f"netsh advfirewall firewall add rule name=Actibase_{port} dir=in action=allow protocol=TCP localport={port}")
+
+
 
 # Appel des fonctions
-delete_temp()
+# delete_temp()
 
-#test
+firewall()
+
 
