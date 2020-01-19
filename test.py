@@ -22,13 +22,13 @@ def delete_temp():
         else:
             print(f"Le dossier {chemin} n'existe pas")
 
+
 def firewall():
     print("Activation du Par-Feu")
-    os.system("NetSh Advfirewall set allprofiles state on")
+    os.system("netsh advfirewall set allprofiles state on")
     print("Ouverture des ports néccéssaires au bon fonctionnement de l'application.")
     for port in ports:
         os.system(f"netsh advfirewall firewall add rule name=Actibase_{port} dir=in action=allow protocol=TCP localport={port}")
-
 
 
 # Appel des fonctions
