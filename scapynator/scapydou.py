@@ -9,3 +9,11 @@ envoi d'une requête HTTP
 envoi d'une requête DICOM
 envoi d'une requête 
 """
+
+from lib.ethernet import Ethernet
+
+packet1 = Ethernet("kekek","lelel")
+print(packet1.get_mac_dst())
+print(packet1.get_mac_src())
+
+
