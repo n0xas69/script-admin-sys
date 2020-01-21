@@ -4,7 +4,7 @@ création d'une classe paquet qui peut :
 - envoi de paquet
 - sniffage de paquet
 
-fonction rapide :
+fonction rapide d'envoi :
 envoi d'une requête HTTP
 envoi d'une requête DICOM
 envoi d'une requête 
