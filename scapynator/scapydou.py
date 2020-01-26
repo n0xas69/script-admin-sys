@@ -1,19 +1,37 @@
 """
 Utilisation de scapy pour savoir si des requêtes sur le port spécifié arrive,
-création d'une classe paquet qui peut :
-- envoi de paquet
-- sniffage de paquet
 
 fonction rapide d'envoi :
 envoi d'une requête HTTP
 envoi d'une requête DICOM
-envoi d'une requête 
+envoi d'une requête
 """
 
-from lib.ethernet import Ethernet
+from scapy.all import *
 
-packet1 = Ethernet("kekek","lelel")
-print(packet1.get_mac_dst())
-print(packet1.get_mac_src())
+class Paquet:
+
+    def __init__(self):
+        pass
+
+    def print_packet(self, packet):
+        ip_layer = packet.getlayer(IP)
+        print("[!] New Packet: {src} -> {dst}".format(src=ip_layer.src, dst=ip_layer.dst))
+
+    def capture(self, port, IP_l, IP_r=None):
+        print("Capture en cours...")
+        if IP_r is not None:
+            sniff(filter="dst port " + port + " and src host " + IP_r + " and dst host "+ IP_l, prn=self.print_packet)
+        else:
+            sniff(filter="dst port " + port + " and dst host "+ IP_l, prn=self.print_packet)
+
+    def send(self):
+        pass
+
+
+if __name__ == '__main__':
+
+   paquet1 = Paquet()
+   paquet1.capture("443","192.168.1.17")
 
 
