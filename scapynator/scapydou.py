@@ -25,13 +25,17 @@ class Paquet:
         else:
             sniff(filter="dst port " + port + " and dst host "+ IP_l, prn=self.print_packet)
 
-    def send(self):
-        pass
+    def send(self, IP_dst):
+        p_tcp = Ether()/IP(dst=IP_dst)/TCP()
+        p_ping = Ether()/IP()/ICMP()
+        sendp(p_tcp)
+
 
 
 if __name__ == '__main__':
 
    paquet1 = Paquet()
-   paquet1.capture("443","192.168.1.17")
+    # paquet1.capture("443","192.168.1.17")
+    paquet1.send("192.168.200.1")
 
 
