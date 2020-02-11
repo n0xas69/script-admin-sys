@@ -5,7 +5,7 @@ import configparser
 
 config = configparser.ConfigParser()
 config.sections()
-config.read(r"D:\DEV\actibase_backup\config.ini")
+config.read(r"D:\DEV\zip_sql_backup\config.ini")
 conf = config["DEFAULT"]
 
 
