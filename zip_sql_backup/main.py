@@ -33,16 +33,14 @@ class Backup:
         # On liste les noms des fichiers, puis on les comptes.
         list_files = os.listdir(self.backup_path)
         if len(list_files) >= int(self.retention):
-            print("pas de backup")
             list_fileObject = []
             for f in list_files:
                 stat = (os.stat(os.path.join(self.backup_path, f))) #On récupère les infos du fichier
-                # list_fileObject.append({"file_name" : fi.get_file(), "file_date" : fi.get_date()})
                 list_fileObject.append({"file_name" : f, "file_date" : stat.st_atime})
 
-            print(list_fileObject)
             list_fileObject.sort(key=lambda x: x["file_date"])
-            print(list_fileObject)
+            value = list(list_fileObject[0].values())
+            os.remove(os.path.join(self.backup_path, value[0]))
 
         else:
             self.zip_backup()
