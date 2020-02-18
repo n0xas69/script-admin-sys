@@ -2,16 +2,19 @@ import os
 import datetime
 import shutil
 import configparser
+from files import Files
 
+cwd = os.getcwd()
 config = configparser.ConfigParser()
 config.sections()
-config.read(r"D:\DEV\zip_sql_backup\config.ini")
+config.read(r"C:\script\PY DEV\script-admin-sys\script-admin-sys\zip_sql_backup\config.ini")
 conf = config["DEFAULT"]
 
 
 date = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
 class Backup:
+
     def __init__(self):
         self.data_path = conf["data_path"]
         self.backup_path = conf["backup_path"]
@@ -32,6 +35,18 @@ class Backup:
         list_files = os.listdir(self.backup_path)
         if len(list_files) >= int(self.retention):
             print("pas de backup")
+            list_fileObject = []
+            dico_date = {}
+            for f in list_files:
+                stat = (os.stat(os.path.join(self.backup_path, f))) #On récupère les infos du fichier
+                fi = Files(f, stat.st_atime)
+                list_fileObject.append({fi.get_file() : fi.get_date()})
+                
+                # dico_date.update({f : stat.st_atime}) # On ajoute en k, v du dico le nom du fichier et la date de création
+            print(list_fileObject)
+            # dico = {k: v for k, v in sorted(dico_date.items(), key=lambda item: item[1])}
+                
+ 
         else:
             self.zip_backup()
 
