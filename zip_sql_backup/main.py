@@ -2,7 +2,6 @@ import os
 import datetime
 import shutil
 import configparser
-from files import Files
 
 cwd = os.getcwd()
 config = configparser.ConfigParser()
