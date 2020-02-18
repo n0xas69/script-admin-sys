@@ -3,10 +3,9 @@ import datetime
 import shutil
 import configparser
 
-cwd = os.getcwd()
 config = configparser.ConfigParser()
 config.sections()
-config.read(r"C:\script\PY DEV\script-admin-sys\script-admin-sys\zip_sql_backup\config.ini")
+config.read("C:\script\PY DEV\script-admin-sys\script-admin-sys\zip_sql_backup\config.ini")
 conf = config["DEFAULT"]
 
 
