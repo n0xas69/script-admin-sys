@@ -36,17 +36,15 @@ class Backup:
         if len(list_files) >= int(self.retention):
             print("pas de backup")
             list_fileObject = []
-            dico_date = {}
             for f in list_files:
                 stat = (os.stat(os.path.join(self.backup_path, f))) #On récupère les infos du fichier
-                fi = Files(f, stat.st_atime)
-                list_fileObject.append({fi.get_file() : fi.get_date()})
-                
-                # dico_date.update({f : stat.st_atime}) # On ajoute en k, v du dico le nom du fichier et la date de création
+                # list_fileObject.append({"file_name" : fi.get_file(), "file_date" : fi.get_date()})
+                list_fileObject.append({"file_name" : f, "file_date" : stat.st_atime})
+
             print(list_fileObject)
-            # dico = {k: v for k, v in sorted(dico_date.items(), key=lambda item: item[1])}
-                
- 
+            list_fileObject.sort(key=lambda x: x["file_date"])
+            print(list_fileObject)
+
         else:
             self.zip_backup()
 
