@@ -28,11 +28,17 @@ class Backup:
 
 
     def check_retention(self):
-        # vérifie quel jour et mois on est pour la rétention jour, semaine, mois
-        # Si jour = dimanche : on ajoute "day" au chemin passer en paramètre dans zip_backup
-        # On liste les noms des fichiers, puis on les comptes.
+        """
+        On liste les fichiers du path backup, tant que le nombre de backup est supérieur au nb de rétention,
+        on créer une liste de dictionnaire avec pour k, v le nom du fichier et la date de création,
+        on trie la liste par les valeurs des dictionnaires,
+        on supprime le fichier du premier élément de la liste
+        """
+        
         list_files = os.listdir(self.backup_path)
-        if len(list_files) >= int(self.retention):
+        nb_file = len(list_files)
+        
+        while nb_file >= int(self.retention):
             list_fileObject = []
             for f in list_files:
                 stat = (os.stat(os.path.join(self.backup_path, f))) #On récupère les infos du fichier
@@ -41,9 +47,11 @@ class Backup:
             list_fileObject.sort(key=lambda x: x["file_date"])
             value = list(list_fileObject[0].values())
             os.remove(os.path.join(self.backup_path, value[0]))
+            list_files = os.listdir(self.backup_path)
+            nb_file = len(list_files)
 
-        else:
-            self.zip_backup()
+        
+        self.zip_backup()
 
 
     def zip_backup(self):
