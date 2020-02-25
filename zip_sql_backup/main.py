@@ -21,6 +21,23 @@ class Backup:
         self.sql_login = conf["SQL_login"]
         self.sql_password = conf["SQL_password"]
     
+    # méthode qui définit dans quels dossiers faire le backup
+    def location_folder(self):
+        dt = datetime.datetime.today()
+        backupLocation = []
+        if dt.day == 1:
+            backupLocation.append(os.path.join(self.backup_path, "Backup_M"))
+            backupLocation.append(os.path.join(self.backup_path, "Backup_D"))
+
+        elif dt.weekday == 6:
+            backupLocation.append(os.path.join(self.backup_path, "Backup_W"))
+            backupLocation.append(os.path.join(self.backup_path, "Backup_D"))
+
+        else:
+            backupLocation.append(os.path.join(self.backup_path, "Backup_D"))
+
+        return backupLocation
+  
 
     def stop_process(self):
         pass
@@ -53,8 +70,14 @@ class Backup:
         self.zip_backup()
 
 
-    def zip_backup(self):
+    def zip_backup(self, backupLocation):
         print("backup en cours")
+        if len(backupLocation) == 2:
+            # Backup dans dans le dossier d'indice 0 puis copie du dossier dans l'index 1 de la liste
+            print("OK")
+        else:
+            # Backup dans le dossier d'indice 0 de la liste
+            print("KO")
 
 
 
@@ -62,5 +85,9 @@ class Backup:
         pass
 
 
-test = Backup()
-test.check_retention()
+if __name__ == "__main__":
+    test = Backup()
+    backupLocation = test.location_folder()
+    test.zip_backup(backupLocation)
+
+
