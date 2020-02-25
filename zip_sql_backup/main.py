@@ -96,7 +96,7 @@ class Backup:
 
             for file in os.listdir(self.data_path):
                 path = os.path.join(self.data_path, file)
-                with ZipFile(zipfileToday, "a") as zipf:
+                with zipfile.ZipFile(zipfileToday, "a", compression=zipfile.ZIP_DEFLATED) as zipf:
                     zipf.write(path)
             
             shutil.copy(zipfileToday, backupLocation[1])
