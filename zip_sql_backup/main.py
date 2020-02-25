@@ -2,7 +2,7 @@ import os
 import datetime
 import shutil
 import configparser
-from zipfile import ZipFile
+import zipfile
 
 config = configparser.ConfigParser()
 config.sections()
@@ -26,11 +26,12 @@ class Backup:
         self.backupM = os.path.join(self.backup_path, "Backup_M")
    
     
+
     # méthode qui définit dans quels dossiers faire le backup
     def location_folder(self):
         dt = datetime.datetime.today()
         backupLocation = []
-        if dt.day == 25:
+        if dt.day == 1:
             backupLocation.append(self.backupM)
             backupLocation.append(self.backupD)
 
@@ -61,7 +62,7 @@ class Backup:
             list_files = os.listdir(folder)
             nb_file = len(list_files)
             
-            while nb_file >= int(self.retention):
+            while nb_file > int(self.retention):
                 list_fileObject = []
                 for f in list_files:
                     stat = (os.stat(os.path.join(folder, f))) #On récupère les infos du fichier
@@ -107,7 +108,7 @@ class Backup:
 
             for file in os.listdir(self.data_path):
                 path = os.path.join(self.data_path, file)
-                with ZipFile(zipfileToday, "a") as zipf:
+                with zipfile.ZipFile(zipfileToday, "a", compression=zipfile.ZIP_DEFLATED) as zipf:
                     zipf.write(path)
 
 
@@ -120,6 +121,6 @@ if __name__ == "__main__":
     backup = Backup()
     backupLocation = backup.location_folder() # Suivant le jour du mois, on spécifie dans quel dossier un backup doit être fait
     backup.check_retention() # On vérifie la rétention des fichiers, on supprime les anciennes sauvegardes
-    backup.zip_backup(backupLocation) # On effectue la sauvegarde des data dans un fichier zip
+    backup.zip_backup(backupLocation) # On effectue la sauvegarde des datas dans un fichier zip
 
 
