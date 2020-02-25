@@ -57,24 +57,22 @@ class Backup:
         """
         checkFolder = [self.backupD, self.backupW, self.backupM]
         
-        
-        list_files = os.listdir(self.backup_path)
-        nb_file = len(list_files)
-        
-        while nb_file >= int(self.retention):
-            list_fileObject = []
-            for f in list_files:
-                stat = (os.stat(os.path.join(self.backup_path, f))) #On récupère les infos du fichier
-                list_fileObject.append({"file_name" : f, "file_date" : stat.st_atime})
-
-            list_fileObject.sort(key=lambda x: x["file_date"])
-            value = list(list_fileObject[0].values())
-            os.remove(os.path.join(self.backup_path, value[0]))
-            list_files = os.listdir(self.backup_path)
+        for folder in checkFolder:
+            list_files = os.listdir(folder)
             nb_file = len(list_files)
+            
+            while nb_file >= int(self.retention):
+                list_fileObject = []
+                for f in list_files:
+                    stat = (os.stat(os.path.join(folder, f))) #On récupère les infos du fichier
+                    list_fileObject.append({"file_name" : f, "file_date" : stat.st_atime})
 
-        
-        self.zip_backup()
+                list_fileObject.sort(key=lambda x: x["file_date"])
+                value = list(list_fileObject[0].values())
+                os.remove(os.path.join(folder, value[0]))
+                list_files = os.listdir(folder)
+                nb_file = len(list_files)
+
 
 
     def zip_backup(self, backupLocation):
@@ -120,7 +118,8 @@ class Backup:
 
 if __name__ == "__main__":
     backup = Backup()
-    backupLocation = backup.location_folder()
-    backup.zip_backup(backupLocation)
+    backupLocation = backup.location_folder() # Suivant le jour du mois, on spécifie dans quel dossier un backup doit être fait
+    backup.check_retention() # On vérifie la rétention des fichiers, on supprime les anciennes sauvegardes
+    backup.zip_backup(backupLocation) # On effectue la sauvegarde des data dans un fichier zip
 
 
