@@ -73,6 +73,13 @@ class Backup:
 
     def zip_backup(self, backupLocation):
         print("backup en cours")
+        if not os.path.exists(self.backup_path + "\Backup_D"):
+            os.makedirs(self.backup_path + "\Backup_D")
+        if not os.path.exists(self.backup_path + "\Backup_W"):
+            os.makedirs(self.backup_path + "\Backup_W")
+        if not os.path.exists(self.backup_path + "\Backup_M"):
+            os.makedirs(self.backup_path + "\Backup_M")
+
         if len(backupLocation) == 2:
             # Backup dans dans le dossier d'indice 0 puis copie du dossier dans l'index 1 de la liste
             print("OK")
