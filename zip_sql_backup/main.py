@@ -3,7 +3,9 @@ import datetime
 import shutil
 import configparser
 import zipfile
+import pyodbc
 
+cwd = os.getcwd()
 config = configparser.ConfigParser()
 config.sections()
 config.read("C:\script\PY DEV\script-admin-sys\script-admin-sys\zip_sql_backup\config.ini")
@@ -114,7 +116,8 @@ class Backup:
 
 
     def sql_backup(self):
-        pass
+        conn = pyodbc.connect("DRIVER={ODBC Driver 17 for SQL Server};SERVER={};DATABASE=test;UID=user;PWD=password".format(self.sql_instance))
+
 
 
 if __name__ == "__main__":
