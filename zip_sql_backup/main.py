@@ -77,7 +77,6 @@ class Backup:
                 nb_file = len(list_files)
 
 
-
     def zip_backup(self, backupLocation):
         print("backup en cours")
         if not os.path.exists(self.backupD):
@@ -107,12 +106,10 @@ class Backup:
             if os.path.exists(zipfileToday) == True:
                 os.remove(zipfileToday)
                 
-
             for file in os.listdir(self.data_path):
                 path = os.path.join(self.data_path, file)
                 with zipfile.ZipFile(zipfileToday, "a", compression=zipfile.ZIP_DEFLATED) as zipf:
                     zipf.write(path)
-
 
 
     def sql_backup(self):
