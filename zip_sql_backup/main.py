@@ -28,7 +28,6 @@ class Backup:
         self.backupM = os.path.join(self.backup_path, "Backup_M")
    
     
-
     # méthode qui définit dans quels dossiers faire le backup
     def location_folder(self):
         dt = datetime.datetime.today()
@@ -43,7 +42,6 @@ class Backup:
 
         else:
             backupLocation.append(self.backupD)
-
         return backupLocation
   
 
@@ -92,7 +90,6 @@ class Backup:
             if os.path.exists(zipfileToday) == True:
                 os.remove(zipfileToday)
                 
-
             for file in os.listdir(self.data_path):
                 path = os.path.join(self.data_path, file)
                 with zipfile.ZipFile(zipfileToday, "a", compression=zipfile.ZIP_DEFLATED) as zipf:
