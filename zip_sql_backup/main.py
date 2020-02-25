@@ -2,6 +2,7 @@ import os
 import datetime
 import shutil
 import configparser
+from zipfile import ZipFile
 
 config = configparser.ConfigParser()
 config.sections()
@@ -9,7 +10,7 @@ config.read("C:\script\PY DEV\script-admin-sys\script-admin-sys\zip_sql_backup\c
 conf = config["DEFAULT"]
 
 
-date = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+date = datetime.datetime.now().strftime("%Y-%m-%d")
 
 class Backup:
 
@@ -77,7 +78,15 @@ class Backup:
             print("OK")
         else:
             # Backup dans le dossier d'indice 0 de la liste
-            print("KO")
+            zipfileToday = os.path.join(self.backup_path, date+".zip")
+            if os.path.exists(zipfileToday) == True:
+                os.remove(zipfileToday)
+                
+
+            for file in os.listdir(self.data_path):
+                path = os.path.join(self.data_path, file)
+                with ZipFile(zipfileToday, "a") as zipf:
+                    zipf.write(path)
 
 
 
