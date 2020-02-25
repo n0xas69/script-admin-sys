@@ -78,7 +78,7 @@ class Backup:
             print("OK")
         else:
             # Backup dans le dossier d'indice 0 de la liste
-            zipfileToday = os.path.join(self.backup_path, date+".zip")
+            zipfileToday = os.path.join(backupLocation[0], date+".zip")
             if os.path.exists(zipfileToday) == True:
                 os.remove(zipfileToday)
                 
