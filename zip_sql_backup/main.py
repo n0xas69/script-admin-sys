@@ -11,7 +11,6 @@ config.sections()
 config.read("C:\script\PY DEV\script-admin-sys\script-admin-sys\zip_sql_backup\config.ini")
 conf = config["DEFAULT"]
 
-
 date = datetime.datetime.now().strftime("%Y-%m-%d")
 
 class Backup:
