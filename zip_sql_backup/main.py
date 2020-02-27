@@ -142,16 +142,16 @@ class Backup:
 
 if __name__ == "__main__":
     backup = Backup()
-    test.delLog()
-    test.sql_test(backup.sql_instance)
-    test.dataPath(backup.data_path)
-    test.backupPath(backup.backup_path)
+    test.delLog() # On vérifie si un fichier log est présent, si oui on le supprime
+    test.sql_test(backup.sql_instance) # On vérifie la connexion à la BDD
+    test.dataPath(backup.data_path) # On vérifie le chemin des données
+    test.backupPath(backup.backup_path) # On vérifie le chemin destination des backup
     backupLocation = backup.location_folder() # Suivant le jour du mois, on spécifie dans quel dossier un backup doit être fait
     backup.check_retention() # On vérifie la rétention des fichiers, on supprime les anciennes sauvegardes
     test.addLog("----------- DEBUT BACKUP -------------")
-    sqlBackup = backup.sql_backup()
+    sqlBackup = backup.sql_backup() # On effectue un .bak de la base
     backup.zip_backup(backupLocation, sqlBackup) # On effectue la sauvegarde des datas dans un fichier zip
-    test.checkError(test.error)
+    test.checkError(test.error) # On vérifie si il y a eu des erreurs
 
 
 
