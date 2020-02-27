@@ -55,8 +55,15 @@ class Backup:
         on trie la liste par les valeurs des dictionnaires,
         on supprime le fichier du premier élément de la liste
         """
+        if not os.path.exists(self.backupD):
+            os.makedirs(self.backupD)
+        if not os.path.exists(self.backupW):
+            os.makedirs(self.backupW)
+        if not os.path.exists(self.backupM):
+            os.makedirs(self.backupM)
+
         checkFolder = [self.backupD, self.backupW, self.backupM]
-        
+
         for folder in checkFolder:
             list_files = os.listdir(folder)
             nb_file = len(list_files)
@@ -80,13 +87,7 @@ class Backup:
 
     def zip_backup(self, backupLocation, sqlBackup):
         print("backup en cours")
-        if not os.path.exists(self.backupD):
-            os.makedirs(self.backupD)
-        if not os.path.exists(self.backupW):
-            os.makedirs(self.backupW)
-        if not os.path.exists(self.backupM):
-            os.makedirs(self.backupM)
-
+        
         if len(backupLocation) == 2:
             # Backup dans dans le dossier d'indice 0 puis copie du dossier dans l'index 1 de la liste
             zipfileToday = os.path.join(backupLocation[0], date+".zip")
@@ -145,11 +146,11 @@ if __name__ == "__main__":
     test.sql_test(backup.sql_instance)
     test.dataPath(backup.data_path)
     test.backupPath(backup.backup_path)
+    backupLocation = backup.location_folder() # Suivant le jour du mois, on spécifie dans quel dossier un backup doit être fait
+    backup.check_retention() # On vérifie la rétention des fichiers, on supprime les anciennes sauvegardes
+    sqlBackup = backup.sql_backup()
+    backup.zip_backup(backupLocation, sqlBackup) # On effectue la sauvegarde des datas dans un fichier zip
     test.checkError(test.error)
-    # backupLocation = backup.location_folder() # Suivant le jour du mois, on spécifie dans quel dossier un backup doit être fait
-    # backup.check_retention() # On vérifie la rétention des fichiers, on supprime les anciennes sauvegardes
-    # sqlBackup = backup.sql_backup()
-    # backup.zip_backup(backupLocation, sqlBackup) # On effectue la sauvegarde des datas dans un fichier zip
 
 
 

@@ -49,7 +49,8 @@ def addLog(content):
 
 
 def delLog():
-    os.remove(logFile)
+    if os.path.isfile(logFile) == True:
+        os.remove(logFile)
 
 
 def checkError(errorV):
