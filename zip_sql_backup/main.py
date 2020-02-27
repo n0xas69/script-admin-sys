@@ -88,6 +88,7 @@ class Backup:
             if os.path.exists(zipfileToday) == True:
                 os.remove(zipfileToday)
 
+            # On parcours le dossier data, pour chaque fichier dans la liste renvoyé par os.walk, on l'ajoute au zip
             for base, dirs, files in os.walk(self.data_path):    
                 for file in files:
                     path = os.path.join(base, file)
