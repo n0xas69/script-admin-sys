@@ -4,6 +4,7 @@ import shutil
 import configparser
 import zipfile
 import pyodbc
+import test
 
 cwd = os.getcwd()
 config = configparser.ConfigParser()
@@ -68,7 +69,11 @@ class Backup:
 
                 list_fileObject.sort(key=lambda x: x["file_date"])
                 value = list(list_fileObject[0].values())
-                os.remove(os.path.join(folder, value[0]))
+                try:
+                    os.remove(os.path.join(folder, value[0]))
+                except:
+                    test.addLog("Impossible de supprimer l'ancienne sauvegarde " + folder)
+                    test.error += 1
                 list_files = os.listdir(folder)
                 nb_file = len(list_files)
 
@@ -87,6 +92,7 @@ class Backup:
             zipfileToday = os.path.join(backupLocation[0], date+".zip")
             if os.path.exists(zipfileToday) == True:
                 os.remove(zipfileToday)
+                
 
             # On parcours le dossier data, pour chaque fichier dans la liste renvoyé par os.walk, on l'ajoute au zip
             for base, dirs, files in os.walk(self.data_path):    
@@ -135,10 +141,15 @@ class Backup:
 
 if __name__ == "__main__":
     backup = Backup()
-    backupLocation = backup.location_folder() # Suivant le jour du mois, on spécifie dans quel dossier un backup doit être fait
-    backup.check_retention() # On vérifie la rétention des fichiers, on supprime les anciennes sauvegardes
-    sqlBackup = backup.sql_backup()
-    backup.zip_backup(backupLocation, sqlBackup) # On effectue la sauvegarde des datas dans un fichier zip
+    test.delLog()
+    test.sql_test(backup.sql_instance)
+    test.dataPath(backup.data_path)
+    test.backupPath(backup.backup_path)
+    test.checkError(test.error)
+    # backupLocation = backup.location_folder() # Suivant le jour du mois, on spécifie dans quel dossier un backup doit être fait
+    # backup.check_retention() # On vérifie la rétention des fichiers, on supprime les anciennes sauvegardes
+    # sqlBackup = backup.sql_backup()
+    # backup.zip_backup(backupLocation, sqlBackup) # On effectue la sauvegarde des datas dans un fichier zip
 
 
 
