@@ -148,6 +148,7 @@ if __name__ == "__main__":
     test.backupPath(backup.backup_path)
     backupLocation = backup.location_folder() # Suivant le jour du mois, on spécifie dans quel dossier un backup doit être fait
     backup.check_retention() # On vérifie la rétention des fichiers, on supprime les anciennes sauvegardes
+    test.addLog("----------- DEBUT BACKUP -------------")
     sqlBackup = backup.sql_backup()
     backup.zip_backup(backupLocation, sqlBackup) # On effectue la sauvegarde des datas dans un fichier zip
     test.checkError(test.error)

@@ -3,7 +3,6 @@ import pyodbc
 import datetime
 from main import Backup
 
-date = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 error = 0
 logFile = "C:\script\PY DEV\log.txt"
 
@@ -44,6 +43,7 @@ def backupPath(path):
 
 
 def addLog(content):
+    date = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     with open(logFile, "a") as log:
         log.write(date + " : " + content + "\n")
 
@@ -55,9 +55,9 @@ def delLog():
 
 def checkError(errorV):
     if errorV >= 1:
-        addLog("----------- ERREUR BACKUP -------------")
+        addLog("----------- FIN BACKUP : ERREUR -------------")
     else:
-        addLog("----------- BACKUP OK -------------")
+        addLog("----------- FIN BACKUP : OK -------------")
 
 
 
