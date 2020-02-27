@@ -87,13 +87,14 @@ class Backup:
             zipfileToday = os.path.join(backupLocation[0], date+".zip")
             if os.path.exists(zipfileToday) == True:
                 os.remove(zipfileToday)
-                
-            for file in os.listdir(self.data_path):
-                path = os.path.join(self.data_path, file)
-                with zipfile.ZipFile(zipfileToday, "a", compression=zipfile.ZIP_DEFLATED) as zipf:
-                    zipf.write(path)
+
+            for base, dirs, files in os.walk(self.data_path):    
+                for file in files:
+                    path = os.path.join(base, file)
+                    with zipfile.ZipFile(zipfileToday, "a", compression=zipfile.ZIP_DEFLATED) as zipf:
+                        zipf.write(path)
             with zipfile.ZipFile(zipfileToday, "a", compression=zipfile.ZIP_DEFLATED) as zipf:
-                    zipf.write(sqlBackup)
+                zipf.write(sqlBackup)
             shutil.copy(zipfileToday, backupLocation[1])
 
         else:
@@ -101,13 +102,14 @@ class Backup:
             zipfileToday = os.path.join(backupLocation[0], date+".zip")
             if os.path.exists(zipfileToday) == True:
                 os.remove(zipfileToday)
-                
-            for file in os.listdir(self.data_path):
-                path = os.path.join(self.data_path, file)
-                with zipfile.ZipFile(zipfileToday, "a", compression=zipfile.ZIP_DEFLATED) as zipf:
-                    zipf.write(path)
+
+            for base, dirs, files in os.walk(self.data_path):    
+                for file in files:
+                    path = os.path.join(base, file)
+                    with zipfile.ZipFile(zipfileToday, "a", compression=zipfile.ZIP_DEFLATED) as zipf:
+                        zipf.write(path)
             with zipfile.ZipFile(zipfileToday, "a", compression=zipfile.ZIP_DEFLATED) as zipf:
-                    zipf.write(sqlBackup)
+                zipf.write(sqlBackup)
 
         os.remove(sqlBackup)
 
