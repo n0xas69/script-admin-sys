@@ -4,11 +4,10 @@ import argparse
 import subprocess as cmd
 
 parser = argparse.ArgumentParser()
-parser.add_argument("type", help="ubuntu, debian or centos")
+parser.add_argument("type", help="ubuntu, debian")
 parser.add_argument("number", help="number of containers to deploy", type=int)
 args = parser.parse_args()
 
-print(args.type)
 
 if args.type == "debian":
     cmd.run("docker pull noxas69/linux_ssh:debian10", shell=True)
