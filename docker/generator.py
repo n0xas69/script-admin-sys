@@ -18,9 +18,11 @@ if args.type == "debian":
         
 
 elif args.type == "ubuntu":
-    cmd.run("docker pull noxas69/linux_ssh:ubuntu16.04", shell=True)
+    cmd.run("docker pull noxas69/linux_ssh:ubuntu20.04", shell=True)
     for c in range(args.number):
-        cmd.run(f"docker run -d --name ubuntu{c} noxas69/linux_ssh:ubuntu16.04", shell=True)
+        cmd.run(f"docker run -d --name ubuntu{c} noxas69/linux_ssh:ubuntu20.04", shell=True)
         cmd.run(f"docker inspect ubuntu{c} | grep '\"IPAddress\"' | head -n 1", shell=True)
+
+
 else:
-    print("Enter a valid name of linux ditrib (ubuntu, debian, centos)")
+    print("Enter a valid name of linux ditrib (ubuntu, debian)")
